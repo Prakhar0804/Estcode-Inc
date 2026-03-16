@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subparts Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #000; color: #fff; }
+        .product-card { background: #111; padding: 20px; margin: 20px 0; border-radius: 10px; cursor: pointer; }
+        .subparts { list-style: none; padding: 0; margin-top: 15px; opacity: 0; transition: opacity 0.3s ease; }
+        .subparts.hidden { display: none !important; }
+        .subparts.visible { display: block !important; opacity: 1 !important; }
+        .subparts li { padding: 5px 0; cursor: pointer; color: #1E90FF; }
+        .subparts li:hover { color: #63B3FF; }
+    </style>
+</head>
+<body>
+    <h1>Subparts Test</h1>
+
+    <div class="product-card">
+        <h3 class="product-title">Test Product</h3>
+        <p>Click me to show subparts</p>
+        <ul class="subparts">
+            <li>Subpart 1</li>
+            <li>Subpart 2</li>
+            <li>Subpart 3</li>
+        </ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const productCards = document.querySelectorAll('.product-card');
+
+            productCards.forEach(card => {
+                // Initialize subparts as hidden
+                const subparts = card.querySelector('.subparts');
+                if (subparts) {
+                    subparts.classList.add('hidden');
+                    subparts.classList.remove('visible');
+                }
+
+                card.addEventListener('click', function(e) {
+                    console.log('Product card clicked');
+                    if (e.target.tagName === 'LI') {
+                        console.log('Clicked LI, ignoring');
+                        return;
+                    }
+
+                    const subparts = this.querySelector('.subparts');
+                    const title = this.querySelector('.product-title');
+
+                    if (subparts) {
+                        const isVisible = subparts.classList.contains('visible');
+                        console.log('Is visible:', isVisible);
+
+                        if (!isVisible) {
+                            subparts.classList.remove('hidden');
+                            subparts.classList.add('visible');
+                            console.log('Showing subparts');
+                        } else {
+                            subparts.classList.remove('visible');
+                            subparts.classList.add('hidden');
+                            console.log('Hiding subparts');
+                        }
+
+                        if (title) {
+                            title.classList.toggle('active');
+                        }
+                    }
+                });
+
+                card.style.cursor = 'pointer';
+            });
+        });
+    </script>
+</body>
+</html>

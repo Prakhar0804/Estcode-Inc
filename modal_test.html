@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-btn { padding: 10px 20px; background: #1E90FF; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; }
+        .modal-content { background: white; margin: 10% auto; padding: 20px; width: 80%; max-width: 500px; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Modal Test</h1>
+    <button class="test-btn" onclick="openModal()">Test Modal</button>
+
+    <div id="testModal" class="modal">
+        <div class="modal-content">
+            <h2>Modal Works!</h2>
+            <p>The modal is functioning properly.</p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('testModal').style.display = 'block';
+        }
+        function closeModal() {
+            document.getElementById('testModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

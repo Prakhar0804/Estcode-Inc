@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Inquiry - Estcode Internationals</title>
+    <meta name="description" content="Submit a product inquiry for Estcode Internationals. Get in touch with our team to request quotes for handicrafts, furniture, agriculture products, and raw materials.">
+    <meta name="keywords" content="product inquiry, bulk order, export quote, handicrafts quote, furniture ordering">
+    <meta name="author" content="Estcode Internationals">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://estcodeinternational.com/inquiry.html">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Product Inquiry - Estcode Internationals">
+    <meta property="og:description" content="Submit a product inquiry and get quotes for premium Indian crafts, furniture, and agriculture products.">
+    <meta property="og:url" content="https://estcodeinternational.com/inquiry.html">
+    <meta property="og:image" content="https://i.ibb.co/fYPvDwd4/IMG-1760.png">
+    <meta property="og:site_name" content="Estcode Internationals">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Product Inquiry - Estcode Internationals">
+    <meta name="twitter:description" content="Request a quote for Estcode products.">
+    <meta name="twitter:image" content="https://i.ibb.co/fYPvDwd4/IMG-1760.png">
+    
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Estcode Internationals",
+      "url": "https://estcodeinternational.com",
+      "logo": "https://i.ibb.co/fYPvDwd4/IMG-1760.png",
+      "description": "Premium exporter of Indian handicrafts, furniture, agriculture products, and raw materials",
+      "sameAs": [
+        "https://www.linkedin.com/company/estcode-internationals",
+        "https://www.instagram.com/estcodeinternational",
+        "https://twitter.com/estcodeinternational"
+      ]
+    }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Estcodeinternationals</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="index.html#markets">Markets</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Inquiry Form Section -->
+    <section class="inquiry-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Product Inquiry</h2>
+                <p class="section-subtitle">Tell us about your requirements</p>
+            </div>
+
+            <div class="inquiry-container">
+                <div class="selected-product-info">
+                    <h3>Selected Product: <span id="selectedProduct"></span></h3>
+                </div>
+
+                <form id="inquiryForm" class="inquiry-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="companyName">Company Name *</label>
+                            <input type="text" id="companyName" name="companyName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="country">Country Name *</label>
+                            <input type="text" id="country" name="country" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="orderQuantity">Order Quantity *</label>
+                            <input type="text" id="orderQuantity" name="orderQuantity" placeholder="e.g., 100 kg, 50 pieces" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hsCode">HS Code *</label>
+                        <input type="text" id="hsCode" name="hsCode" placeholder="Harmonized System Code" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="additionalInfo">Additional Information</label>
+                        <textarea id="additionalInfo" name="additionalInfo" rows="4" placeholder="Any specific requirements or questions..."></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="goBack()">Back</button>
+                        <button type="submit" class="btn-primary">Submit Inquiry</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h2>Estcode</h2>
+                    <p>Premium exporter of brass & metal handicrafts from India to the world.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#products">Products</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Connect With Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Estcode. All rights reserved. Made in India.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="inquiry.js"></script>
+</body>
+</html>

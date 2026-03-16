@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estcode Internationals - Complete</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gold: #1E90FF;
+            --secondary-gold: #63B3FF;
+            --dark-gold: #0B66D6;
+            --black: #0A0A0A;
+            --near-black: #111111;
+            --charcoal: #1A1A1A;
+            --white: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --text-light: rgba(255, 255, 255, 0.9);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --shadow-light: rgba(30, 144, 255, 0.15);
+            --shadow-dark: rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.65;
+            color: var(--white);
+            overflow-x: hidden;
+            background: var(--black);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: saturate(180%) blur(25px);
+            z-index: 1000;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo h2 {
+            color: var(--primary-gold);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-gold);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 0 80px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-right: 1rem;
+        }
+
+        .cta-button.primary {
+            background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+            color: white;
+        }
+
+        .cta-button.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(30, 144, 255, 0.3);
+        }
+
+        /* Products Section */
+        .products {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 2rem;
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            transition: color 0.3s;
+        }
+
+        .product-title.active {
+            color: var(--primary-gold);
+        }
+
+        .product-info p {
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .subparts {
+            list-style: none;
+            margin-top: 1.5rem;
+            padding: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .subparts.hidden {
+            display: none !important;
+        }
+
+        .subparts.visible {
+            display: block !important;
+            opacity: 1 !important;
+        }
+
+        .subparts li {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.25rem 0;
+            border-radius: 6px;
+            position: relative;
+            user-select: none;
+        }
+
+        .subparts li:hover {
+            color: var(--primary-gold);
+            transform: translateX(8px);
+            background: rgba(30, 144, 255, 0.05);
+            padding-left: 0.5rem;
+        }
+
+        .subparts li:hover::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 60%;
+            background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+            border-radius: 2px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(15px);
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .modal.modal-show {
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(10, 10, 10, 0.98) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(30, 144, 255, 0.1);
+            transform: translateY(-50px) scale(0.95);
+            opacity: 0;
+            transition: all 0.3s ease-out;
+        }
+
+        .modal.modal-show .modal-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+            color: white;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .close-modal {
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: white;
+        }
+
+        .close-modal:hover {
+            transform: scale(1.2) rotate(90deg);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .selected-product-info {
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.05), rgba(99, 179, 255, 0.05));
+            border: 1px solid rgba(30, 144, 255, 0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary-gold);
+        }
+
+        .inquiry-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 0.875rem 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--white);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.15), 0 0 20px rgba(30, 144, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-1px);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            padding: 0.875rem 2.5rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+            color: white;
+            box-shadow: 0 4px 15px rgba(30, 144, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 144, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Estcodeinternationals</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#markets">Markets</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Estcode Internationals <br>
+                    <span class="gradient-text">Premium Export Solutions</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Trusted partner for premium export services from India
+                </p>
+                <div class="hero-buttons">
+                    <a href="#products" class="cta-button primary">View Our Products</a>
+                    <a href="#contact" class="cta-button secondary">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products">
+        <div class="container">
+            <div class="section-header">
+                <h2>Product Showcase</h2>
+                <p class="section-subtitle">Premium collection for luxury interiors</p>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?w=400&h=300&fit=crop" alt="Agriculture">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Agriculture</h3>
+                        <p>Premium agricultural products including lentils, vegetables, pulses, grains, and maize.</p>
+                        <ul class="subparts visible">
+                            <li>Lentils</li>
+                            <li>Vegetables</li>
+                            <li>Pulses</li>
+                            <li>Grains</li>
+                            <li>Maize</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1452860606245-08befc0ff44b?w=400&h=300&fit=crop" alt="Handicrafts">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Handicrafts</h3>
+                        <p>Exquisite handicrafts featuring brass, wooden, ceramic, and enamel craftsmanship.</p>
+                        <ul class="subparts visible">
+                            <li>Brass</li>
+                            <li>Wooden</li>
+                            <li>Ceramic</li>
+                            <li>Enamel</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop" alt="Furniture">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Furniture</h3>
+                        <p>Luxury furniture including minibars, sofas, couches, luxury beds, counter tables, dining tables, and sets.</p>
+                        <ul class="subparts visible">
+                            <li>Minibars</li>
+                            <li>Sofa</li>
+                            <li>Couch</li>
+                            <li>Luxury Beds</li>
+                            <li>Counter Tables</li>
+                            <li>Dining Tables</li>
+                            <li>Dining Sets</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inquiry Modal -->
+    <div id="inquiryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Product Inquiry</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="selectedProduct" class="selected-product-info">
+                    <p><strong>Selected Product:</strong> <span id="productName"></span></p>
+                </div>
+                <form id="inquiryForm" class="inquiry-form">
+                    <div class="form-group">
+                        <label for="companyName">Company Name *</label>
+                        <input type="text" id="companyName" name="companyName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country Name *</label>
+                        <input type="text" id="country" name="country" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="orderQuantity">Order Quantity *</label>
+                        <input type="text" id="orderQuantity" name="orderQuantity" placeholder="e.g., 100 kg, 50 pieces" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hsCode">HS Code</label>
+                        <input type="text" id="hsCode" name="hsCode" placeholder="Harmonized System Code (optional)">
+                    </div>
+                    <div class="form-group">
+                        <label for="additionalInfo">Additional Information</label>
+                        <textarea id="additionalInfo" name="additionalInfo" rows="4" placeholder="Any specific requirements or questions..."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" id="cancelBtn">Cancel</button>
+                        <button type="submit" class="btn-primary">Submit Inquiry</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Product subparts toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all product cards
+            const productCards = document.querySelectorAll('.product-card');
+
+            productCards.forEach(card => {
+                // Initialize subparts as VISIBLE for testing
+                const subparts = card.querySelector('.subparts');
+                if (subparts) {
+                    subparts.classList.remove('hidden');
+                    subparts.classList.add('visible');
+                }
+
+                card.addEventListener('click', function(e) {
+                    console.log('Product card clicked:', this);
+                    // Don't toggle subparts if clicking on a subpart (li element)
+                    if (e.target.tagName === 'LI') {
+                        console.log('Clicked on LI element, ignoring product card click');
+                        return;
+                    }
+
+                    // Find the subparts list within this card
+                    const subparts = this.querySelector('.subparts');
+                    const title = this.querySelector('.product-title');
+
+                    console.log('Subparts element:', subparts);
+                    console.log('Title element:', title);
+
+                    if (subparts) {
+                        const isVisible = subparts.classList.contains('visible');
+                        console.log('Subparts currently visible:', isVisible);
+
+                        if (!isVisible) {
+                            // Show subparts
+                            subparts.classList.remove('hidden');
+                            subparts.classList.add('visible');
+                            console.log('Showing subparts for:', title ? title.textContent : 'unknown product');
+                        } else {
+                            // Hide subparts
+                            subparts.classList.remove('visible');
+                            subparts.classList.add('hidden');
+                            console.log('Hiding subparts for:', title ? title.textContent : 'unknown product');
+                        }
+
+                        // Toggle active class for styling on the title
+                        if (title) {
+                            title.classList.toggle('active');
+                        }
+                    }
+                });
+
+                // Add cursor pointer to indicate clickable
+                card.style.cursor = 'pointer';
+            });
+
+            // Smooth scrolling for navigation links
+            const navLinks = document.querySelectorAll('a[href^="#"]');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Product inquiry modal functionality
+            const modal = document.getElementById('inquiryModal');
+            const closeModalBtn = document.querySelector('.close-modal');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const inquiryForm = document.getElementById('inquiryForm');
+            const productNameSpan = document.getElementById('productName');
+
+            // Debug: Check if elements exist
+            console.log('Modal elements check:', {
+                modal: modal,
+                closeModalBtn: closeModalBtn,
+                cancelBtn: cancelBtn,
+                inquiryForm: inquiryForm,
+                productNameSpan: productNameSpan
+            });
+
+            // Add click event listeners to all subparts
+            const subparts = document.querySelectorAll('.subparts li');
+            console.log('Found subparts:', subparts.length);
+
+            subparts.forEach((subpart, index) => {
+                subpart.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent triggering the product card click
+                    const productName = this.textContent.trim();
+                    console.log('Clicked subpart:', productName, 'Index:', index);
+                    openModal(productName);
+                });
+
+                // Add visual feedback and accessibility
+                subpart.style.cursor = 'pointer';
+                subpart.setAttribute('role', 'button');
+                subpart.setAttribute('tabindex', '0');
+                subpart.setAttribute('aria-label', `Inquire about ${subpart.textContent.trim()}`);
+
+                // Add keyboard support
+                subpart.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+            });
+
+            // Function to open modal with enhanced animation
+            function openModal(productName) {
+                if (!modal) {
+                    console.error('Modal element not found!');
+                    return;
+                }
+
+                console.log('Opening modal for product:', productName);
+                productNameSpan.textContent = productName;
+                modal.style.display = 'block';
+
+                // Force reflow to ensure animation works
+                modal.offsetHeight;
+
+                // Add show class for animation
+                modal.classList.add('modal-show');
+
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+
+                // Focus on first input for accessibility
+                setTimeout(() => {
+                    const firstInput = inquiryForm.querySelector('input');
+                    if (firstInput) firstInput.focus();
+                }, 300);
+            }
+
+            // Function to close modal with animation
+            function closeModal() {
+                if (!modal) return;
+
+                console.log('Closing modal');
+                modal.classList.remove('modal-show');
+
+                // Wait for animation to complete before hiding
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto'; // Restore scrolling
+                    if (inquiryForm) inquiryForm.reset(); // Reset form
+                }, 300); // Match animation duration
+            }
+
+            // Close modal when clicking the X button
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    closeModal();
+                });
+            }
+
+            // Close modal when clicking cancel button
+            if (cancelBtn) {
+                cancelBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    closeModal();
+                });
+            }
+
+            // Close modal when clicking outside the modal content
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        closeModal();
+                    }
+                });
+
+                // Close modal on Escape key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && modal.style.display === 'block') {
+                        closeModal();
+                    }
+                });
+            }
+
+            // Handle form submission with enhanced feedback
+            if (inquiryForm) {
+                inquiryForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    // Get form data
+                    const formData = new FormData(this);
+                    const inquiryData = {
+                        product: productNameSpan.textContent,
+                        companyName: formData.get('companyName'),
+                        email: formData.get('email'),
+                        country: formData.get('country'),
+                        orderQuantity: formData.get('orderQuantity'),
+                        hsCode: formData.get('hsCode'),
+                        additionalInfo: formData.get('additionalInfo'),
+                        timestamp: new Date().toISOString()
+                    };
+
+                    console.log('Inquiry submitted:', inquiryData);
+
+                    // Show loading state
+                    const submitBtn = inquiryForm.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = 'Sending...';
+                    submitBtn.disabled = true;
+
+                    // Simulate API call (replace with actual API call)
+                    setTimeout(() => {
+                        // Show success message
+                        alert(`Thank you for your inquiry about ${inquiryData.product}!\n\nCompany: ${inquiryData.companyName}\nEmail: ${inquiryData.email}\n\nWe will contact you within 24 hours.`);
+
+                        // Reset button
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+
+                        // Close modal
+                        closeModal();
+                    }, 1000);
+                });
+            }
+
+            // Add form field validation feedback
+            const formInputs = document.querySelectorAll('#inquiryForm input, #inquiryForm textarea');
+            formInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    if (this.value.trim()) {
+                        this.style.borderColor = 'var(--primary-gold)';
+                    } else {
+                        this.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                    }
+                });
+
+                input.addEventListener('blur', function() {
+                    if (this.hasAttribute('required') && !this.value.trim()) {
+                        this.style.borderColor = '#ff4757';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
