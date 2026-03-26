@@ -1,15 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0">
   <url>
     <loc>https://estcodeinternational.com/</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <mobile:mobile/>
+    <image:image>
+      <image:loc>https://i.ibb.co/fYPvDwd4/IMG-1760.png</image:loc>
+      <image:title>Estcode Internationals Logo</image:title>
+      <image:caption>Premium Indian Export Company</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>agriculture.jpeg</image:loc>
+      <image:title>Premium Indian Agricultural Products</image:title>
+      <image:caption>Lentils, Vegetables, Pulses, Grains for Export</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>handicraft.jpeg</image:loc>
+      <image:title>Indian Handicrafts - Brass and Metal Pieces</image:title>
+      <image:caption>Handcrafted brass, wooden, ceramic, and enamel items</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>furniture.jpeg</image:loc>
+      <image:title>Luxury Furniture Collection</image:title>
+      <image:caption>Premium sofas, beds, dining tables from India</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>Homedecor.jpeg</image:loc>
+      <image:title>Luxury Home Decor Items</image:title>
+      <image:caption>Lamps, carpets, antique furniture pieces</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>raw material.jpeg</image:loc>
+      <image:title>Industrial Raw Materials</image:title>
+      <image:caption>Brass, copper, aluminium, iron, and steel exports</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://estcodeinternational.com/inquiry.html</loc>
-    <lastmod>2026-03-16</lastmod>
+    <lastmod>2026-03-26</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+    <mobile:mobile/>
+    <image:image>
+      <image:loc>https://i.ibb.co/fYPvDwd4/IMG-1760.png</image:loc>
+      <image:title>Estcode Internationals Logo</image:title>
+      <image:caption>Export Company - Product Inquiry Form</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://estcodeinternational.com/#about</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://estcodeinternational.com/#products</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://estcodeinternational.com/#markets</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://estcodeinternational.com/#contact</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
