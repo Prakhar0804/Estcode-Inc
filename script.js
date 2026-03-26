@@ -40,27 +40,46 @@ document.addEventListener('DOMContentLoaded', function() {
             // Find the subparts list within this card
             const subparts = this.querySelector('.subparts');
             const title = this.querySelector('.product-title');
+            const isExpanded = subparts.style.display === 'block';
 
-            if (subparts) {
-                // Toggle visibility
-                if (subparts.style.display === 'none' || subparts.style.display === '') {
-                    subparts.style.display = 'block';
-                    // Add smooth animation
-                    subparts.style.opacity = '0';
-                    setTimeout(() => {
-                        subparts.style.opacity = '1';
-                        subparts.style.transition = 'opacity 0.3s ease';
-                    }, 10);
-                } else {
-                    subparts.style.opacity = '0';
-                    setTimeout(() => {
-                        subparts.style.display = 'none';
-                    }, 300);
+            // Close all other product subparts
+            productCards.forEach(otherCard => {
+                if (otherCard !== this) {
+                    const otherSubparts = otherCard.querySelector('.subparts');
+                    const otherTitle = otherCard.querySelector('.product-title');
+                    
+                    if (otherSubparts && otherSubparts.style.display === 'block') {
+                        otherSubparts.style.opacity = '0';
+                        setTimeout(() => {
+                            otherSubparts.style.display = 'none';
+                        }, 300);
+                        if (otherTitle) {
+                            otherTitle.classList.remove('active');
+                        }
+                    }
                 }
+            });
 
-                // Toggle active class for styling on the title
+            // Toggle current card
+            if (!isExpanded) {
+                // Expand
+                subparts.style.display = 'block';
+                subparts.style.opacity = '0';
+                setTimeout(() => {
+                    subparts.style.opacity = '1';
+                    subparts.style.transition = 'opacity 0.3s ease';
+                }, 10);
                 if (title) {
-                    title.classList.toggle('active');
+                    title.classList.add('active');
+                }
+            } else {
+                // Collapse
+                subparts.style.opacity = '0';
+                setTimeout(() => {
+                    subparts.style.display = 'none';
+                }, 300);
+                if (title) {
+                    title.classList.remove('active');
                 }
             }
         });

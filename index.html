@@ -41,6 +41,16 @@
     <meta name="twitter:image" content="https://i.ibb.co/fYPvDwd4/IMG-1760.png">
     <meta name="twitter:site" content="@estcodeinternational">
     
+    <!-- Additional Meta Tags -->
+    <meta name="googlebot" content="index, follow">
+    <meta name="bingbot" content="index, follow">
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="format-detection" content="telephone=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/fYPvDwd4/IMG-1760.png">
+    <link rel="manifest" href="/manifest.json">
+    
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
@@ -48,28 +58,159 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
+      "@type": "LocalBusiness",
+      "@id": "https://estcodeinternational.com",
       "name": "Estcode Internationals",
+      "alternateName": ["Est Code", "Estcode", "Eastcode"],
+      "description": "Premium international export company specializing in Indian handicrafts, furniture, agriculture products, and raw materials",
       "url": "https://estcodeinternational.com",
       "logo": "https://i.ibb.co/fYPvDwd4/IMG-1760.png",
-      "description": "Premium exporter of Indian handicrafts, furniture, agriculture products, and raw materials",
+      "image": "https://i.ibb.co/fYPvDwd4/IMG-1760.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IN",
+        "addressLocality": "India"
+      },
+      "areaServed": ["US", "UK", "DE", "AE", "AU", "CA", "FR", "IT", "ES", "JP", "CH", "BE", "NL", "SE"],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Business Support",
+        "availableLanguage": ["en"],
+        "contactOption": "TollFree"
+      },
       "sameAs": [
         "https://www.linkedin.com/company/estcode-internationals",
         "https://www.instagram.com/estcodeinternational",
         "https://twitter.com/estcodeinternational"
       ],
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "IN"
-      },
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "contactType": "Business",
-        "availableLanguage": ["en"]
-      }
+      "priceRange": "$$",
+      "knowsAbout": ["Indian Handicrafts", "Premium Furniture", "Agriculture Export", "Raw Materials", "International Trade"],
+      "keywords": "Estcode, Est Code, international export company, Indian handicrafts, furniture, agriculture, premium exporter"
     }
     </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Product Schema for Organization Products -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "ItemList",
+      "itemListElement": [
+        {
+          "@type": "Product",
+          "position": 1,
+          "name": "Premium Agricultural Products",
+          "description": "Premium agricultural products including lentils, vegetables, pulses, grains, and maize from India",
+          "image": "https://i.ibb.co/path/agriculture.jpeg",
+          "brand": {"@type": "Brand", "name": "Estcode Internationals"},
+          "offers": {
+            "@type": "AggregateOffer",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+          }
+        },
+        {
+          "@type": "Product",
+          "position": 2,
+          "name": "Handicrafts - Brass, Wooden & Ceramic",
+          "description": "Exquisite handicrafts featuring brass, wooden, ceramic, and enamel craftsmanship from India",
+          "image": "https://i.ibb.co/path/handicraft.jpeg",
+          "brand": {"@type": "Brand", "name": "Estcode Internationals"},
+          "offers": {
+            "@type": "AggregateOffer",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+          }
+        },
+        {
+          "@type": "Product",
+          "position": 3,
+          "name": "Premium Furniture - Luxury Collection",
+          "description": "Luxury furniture including minibars, sofas, luxury beds, counter tables, and dining sets",
+          "image": "https://i.ibb.co/path/furniture.jpeg",
+          "brand": {"@type": "Brand", "name": "Estcode Internationals"},
+          "offers": {
+            "@type": "AggregateOffer",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+          }
+        },
+        {
+          "@type": "Product",
+          "position": 4,
+          "name": "Home Decor - Luxury Design Items",
+          "description": "Elegant home decor items including lamps, carpets, luxury furniture, and antique pieces",
+          "image": "https://i.ibb.co/path/homedecor.jpeg",
+          "brand": {"@type": "Brand", "name": "Estcode Internationals"},
+          "offers": {
+            "@type": "AggregateOffer",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+          }
+        },
+        {
+          "@type": "Product",
+          "position": 5,
+          "name": "Industrial Raw Materials",
+          "description": "High-quality raw materials including brass, copper, aluminium, iron, and steel",
+          "image": "https://i.ibb.co/path/rawmaterial.jpeg",
+          "brand": {"@type": "Brand", "name": "Estcode Internationals"},
+          "offers": {
+            "@type": "AggregateOffer",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- BreadcrumbList Schema -->
+    <script type=\"application/ld+json\">
+    {
+      \"@context\": \"https://schema.org\",
+      \"@type\": \"BreadcrumbList\",
+      \"itemListElement\": [
+        {
+          \"@type\": \"ListItem\",
+          \"position\": 1,
+          \"name\": \"Home\",
+          \"item\": \"https://estcodeinternational.com/\"
+        },
+        {
+          \"@type\": \"ListItem\",
+          \"position\": 2,
+          \"name\": \"About\",
+          \"item\": \"https://estcodeinternational.com/#about\"
+        },
+        {
+          \"@type\": \"ListItem\",
+          \"position\": 3,
+          \"name\": \"Products\",
+          \"item\": \"https://estcodeinternational.com/#products\"
+        },
+        {
+          \"@type\": \"ListItem\",
+          \"position\": 4,
+          \"name\": \"Markets\",
+          \"item\": \"https://estcodeinternational.com/#markets\"
+        },
+        {
+          \"@type\": \"ListItem\",
+          \"position\": 5,
+          \"name\": \"Contact\",
+          \"item\": \"https://estcodeinternational.com/#contact\"
+        },
+        {
+          \"@type\": \"ListItem\",
+          \"position\": 6,
+          \"name\": \"Inquiry\",
+          \"item\": \"https://estcodeinternational.com/inquiry.html\"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">
 </head>
 <body>
     <!-- Navigation -->

@@ -1,5 +1,30 @@
 // Inquiry page functionality
 document.addEventListener('DOMContentLoaded', function() {
+    // Valid countries list
+    const validCountries = [
+        'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria',
+        'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan',
+        'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cambodia', 'Cameroon',
+        'Canada', 'Cape Verde', 'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Comoros', 'Congo', 'Costa Rica',
+        'Croatia', 'Cuba', 'Cyprus', 'Czech Republic', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'East Timor', 'Ecuador',
+        'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Eswatini', 'Ethiopia', 'Fiji', 'Finland', 'France',
+        'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece', 'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau',
+        'Guyana', 'Haiti', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq',
+        'Ireland', 'Israel', 'Italy', 'Ivory Coast', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati',
+        'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania',
+        'Luxembourg', 'Macao', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania',
+        'Mauritius', 'Mexico', 'Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar',
+        'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'North Korea', 'North Macedonia',
+        'Norway', 'Oman', 'Pakistan', 'Palau', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines',
+        'Poland', 'Portugal', 'Qatar', 'Romania', 'Russia', 'Rwanda', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines',
+        'Samoa', 'San Marino', 'Sao Tome and Principe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore',
+        'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Korea', 'South Sudan', 'Spain', 'Sri Lanka',
+        'Sudan', 'Suriname', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Togo',
+        'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates',
+        'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Venezuela', 'Vietnam', 'Yemen',
+        'Zambia', 'Zimbabwe'
+    ];
+
     // Get product name from URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const productName = urlParams.get('product');
@@ -17,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
 
             // Basic form validation
-            const requiredFields = ['companyName', 'email', 'country', 'orderQuantity', 'hsCode'];
+            const requiredFields = ['companyName', 'email', 'country', 'orderQuantity', 'hsCode', 'specificProduct'];
             let isValid = true;
 
             requiredFields.forEach(fieldName => {
@@ -35,6 +60,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
+            // Validate country name
+            const countryField = document.getElementById('country');
+            const enteredCountry = countryField.value.trim();
+            const isValidCountry = validCountries.some(country => country.toLowerCase() === enteredCountry.toLowerCase());
+
+            if (!isValidCountry) {
+                countryField.style.borderColor = '#ff4757';
+                alert('Incorrect country name. Please select a valid country from the suggestions.');
+                return;
+            }
+
+            countryField.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+
             // Get form data
             const formData = new FormData(this);
             const inquiryData = {
@@ -44,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 country: formData.get('country'),
                 orderQuantity: formData.get('orderQuantity'),
                 hsCode: formData.get('hsCode'),
+                specificProduct: formData.get('specificProduct'),
                 additionalInfo: formData.get('additionalInfo'),
                 timestamp: new Date().toISOString()
             };
@@ -75,9 +114,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Add form field validation feedback
-    const formInputs = document.querySelectorAll('#inquiryForm input, #inquiryForm textarea');
+    const formInputs = document.querySelectorAll('#inquiryForm input, #inquiryForm textarea, #inquiryForm select');
     formInputs.forEach(input => {
         input.addEventListener('input', function() {
+            if (this.value.trim()) {
+                this.style.borderColor = 'var(--primary-gold)';
+            } else {
+                this.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+            }
+        });
+
+        input.addEventListener('change', function() {
             if (this.value.trim()) {
                 this.style.borderColor = 'var(--primary-gold)';
             } else {
