@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enquiries Dashboard - Estcode</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0A0A0A;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #1E90FF, #63B3FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-box {
+            background: rgba(30, 144, 255, 0.1);
+            border: 1px solid rgba(30, 144, 255, 0.2);
+            padding: 15px 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1E90FF;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 5px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #1E90FF, #63B3FF);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(30, 144, 255, 0.3);
+        }
+
+        button.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #1E90FF;
+        }
+
+        .table-container {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: rgba(30, 144, 255, 0.1);
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #1E90FF;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        tr:hover {
+            background: rgba(30, 144, 255, 0.05);
+        }
+
+        .id {
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #63B3FF;
+        }
+
+        .email {
+            color: #63B3FF;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status.new {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+
+        .date {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1A1A1A;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            float: right;
+            cursor: pointer;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #fff;
+        }
+
+        .detail-row {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .detail-label {
+            color: #1E90FF;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            word-break: break-word;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #1E90FF;
+        }
+
+        .error {
+            background: rgba(255, 71, 87, 0.1);
+            border: 1px solid rgba(255, 71, 87, 0.3);
+            color: #ff4757;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .stats {
+                flex-wrap: wrap;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>📋 Enquiries Dashboard</h1>
+                <p style="color: rgba(255,255,255,0.6); margin-top: 5px;">Estcode Internationals - Client Submissions</p>
+            </div>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-number" id="totalCount">0</div>
+                    <div class="stat-label">Total Enquiries</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="newCount">0</div>
+                    <div class="stat-label">New</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button onclick="loadEnquiries()">🔄 Refresh</button>
+            <button class="secondary" onclick="exportData()">💾 Export CSV</button>
+            <button class="secondary" onclick="clearAll()">🗑️ Clear All</button>
+        </div>
+
+        <div id="error" class="error" style="display: none;"></div>
+
+        <div id="loading" class="loading" style="display: none;">
+            ⏳ Loading enquiries...
+        </div>
+
+        <div class="table-container">
+            <table id="enquiriesTable" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Company</th>
+                        <th>Email</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Submitted</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="enquiriesBody">
+                </tbody>
+            </table>
+            <div id="empty" class="empty">
+                ℹ️ No enquiries yet. Waiting for client submissions...
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h2 style="margin-bottom: 20px; color: #1E90FF;">Enquiry Details</h2>
+            <div id="detailContent"></div>
+        </div>
+    </div>
+
+    <script>
+        let enquiries = [];
+
+        // Load enquiries on page load
+        document.addEventListener('DOMContentLoaded', loadEnquiries);
+
+        async function loadEnquiries() {
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+            const table = document.getElementById('enquiriesTable');
+            const empty = document.getElementById('empty');
+
+            loading.style.display = 'block';
+            error.style.display = 'none';
+            table.style.display = 'none';
+            empty.style.display = 'block';
+
+            try {
+                const response = await fetch('/api/enquiries');
+                const data = await response.json();
+
+                loading.style.display = 'none';
+
+                if (!data.success) {
+                    throw new Error(data.error || 'Failed to load enquiries');
+                }
+
+                enquiries = data.enquiries || [];
+
+                if (enquiries.length === 0) {
+                    empty.style.display = 'block';
+                    table.style.display = 'none';
+                    document.getElementById('totalCount').textContent = '0';
+                    document.getElementById('newCount').textContent = '0';
+                    return;
+                }
+
+                empty.style.display = 'none';
+                table.style.display = 'table';
+                renderTable();
+                updateStats();
+
+            } catch (err) {
+                loading.style.display = 'none';
+                error.style.display = 'block';
+                error.textContent = `❌ Error: ${err.message}`;
+                console.error('Error loading enquiries:', err);
+            }
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('enquiriesBody');
+            tbody.innerHTML = '';
+
+            enquiries.forEach(enquiry => {
+                const date = new Date(enquiry.submittedAt);
+                const dateStr = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="id">${enquiry.id}</td>
+                    <td>${enquiry.name}</td>
+                    <td class="email">${enquiry.email}</td>
+                    <td>${enquiry.product}</td>
+                    <td>${enquiry.quantity}</td>
+                    <td class="date">${dateStr}</td>
+                    <td>
+                        <button class="secondary" onclick="viewDetail('${enquiry.id}')" style="padding: 6px 12px; font-size: 0.85rem;">View</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function updateStats() {
+            document.getElementById('totalCount').textContent = enquiries.length;
+            const newCount = enquiries.filter(e => e.status === 'New').length;
+            document.getElementById('newCount').textContent = newCount;
+        }
+
+        function viewDetail(id) {
+            const enquiry = enquiries.find(e => e.id === id);
+            if (!enquiry) return;
+
+            const content = document.getElementById('detailContent');
+            const date = new Date(enquiry.submittedAt);
+
+            content.innerHTML = `
+                <div class="detail-row">
+                    <div class="detail-label">ID</div>
+                    <div class="detail-value" style="font-family: monospace;">${enquiry.id}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Company Name</div>
+                    <div class="detail-value">${enquiry.name}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Email</div>
+                    <div class="detail-value"><a href="mailto:${enquiry.email}" style="color: #63B3FF;">${enquiry.email}</a></div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Product</div>
+                    <div class="detail-value">${enquiry.product}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Quantity</div>
+                    <div class="detail-value">${enquiry.quantity}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Message</div>
+                    <div class="detail-value">${enquiry.message}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Submitted At</div>
+                    <div class="detail-value">${date.toLocaleString()}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Status</div>
+                    <div class="detail-value">
+                        <span class="status new">${enquiry.status}</span>
+                    </div>
+                </div>
+                <div style="margin-top: 20px;">
+                    <button onclick="copyContact('${enquiry.email}')">Copy Email</button>
+                    <button class="secondary" onclick="closeModal()" style="margin-left: 10px;">Close</button>
+                </div>
+            `;
+
+            document.getElementById('detailModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('detailModal').classList.remove('active');
+        }
+
+        function copyContact(email) {
+            navigator.clipboard.writeText(email).then(() => {
+                alert('✓ Email copied to clipboard!');
+            });
+        }
+
+        function exportData() {
+            if (enquiries.length === 0) {
+                alert('No enquiries to export');
+                return;
+            }
+
+            // Convert to CSV
+            let csv = 'ID,Company,Email,Product,Quantity,Message,Submitted At\n';
+            enquiries.forEach(e => {
+                csv += `"${e.id}","${e.name.replace(/"/g, '""')}","${e.email}","${e.product}","${e.quantity}","${e.message.replace(/"/g, '""')}","${e.submittedAt}"\n`;
+            });
+
+            // Download
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `enquiries_${new Date().toISOString().split('T')[0]}.csv`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+
+            alert('✓ Enquiries exported to CSV');
+        }
+
+        function clearAll() {
+            if (!confirm('⚠️ Clear all enquiries? This cannot be undone!')) return;
+
+            if (confirm('Are you absolutely sure?')) {
+                enquiries = [];
+                document.getElementById('enquiriesTable').style.display = 'none';
+                document.getElementById('empty').style.display = 'block';
+                document.getElementById('totalCount').textContent = '0';
+                document.getElementById('newCount').textContent = '0';
+                alert('✓ All enquiries cleared');
+            }
+        }
+
+        // Auto-refresh every 30 seconds
+        setInterval(loadEnquiries, 30000);
+    </script>
+</body>
+</html>

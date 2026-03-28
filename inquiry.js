@@ -95,21 +95,54 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.textContent = 'Sending...';
             submitBtn.disabled = true;
 
-            // Simulate API call (replace with actual API call)
-            setTimeout(() => {
-                // Show success message
-                alert(`Thank you for your inquiry about ${inquiryData.product}!\n\nCompany: ${inquiryData.companyName}\nEmail: ${inquiryData.email}\nCountry: ${inquiryData.country}\n\nWe will contact you within 24 hours.`);
+            // Send to backend API
+            fetch('/api/product-enquiry', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: inquiryData.companyName,
+                    email: inquiryData.email,
+                    product: inquiryData.product,
+                    quantity: inquiryData.orderQuantity,
+                    message: `
+Country: ${inquiryData.country}
+HS Code: ${inquiryData.hsCode || 'Not provided'}
+Specific Product: ${inquiryData.specificProduct}
+Additional Info: ${inquiryData.additionalInfo || 'None'}
+                    `.trim()
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    // Show success message
+                    alert(`✓ Thank you for your inquiry!\n\nCompany: ${inquiryData.companyName}\nEmail: ${inquiryData.email}\nProduct: ${inquiryData.product}\n\nWe will contact you within 24 hours.\n\nYour inquiry has been saved.`);
+
+                    // Reset form
+                    inquiryForm.reset();
+
+                    // Reset button
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                } else {
+                    throw new Error(data.error || 'Unknown error occurred');
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting inquiry:', error);
+                alert(`Error: ${error.message}\n\nPlease try again or contact us directly.`);
 
                 // Reset button
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
-
-                // Reset form
-                inquiryForm.reset();
-
-                // Optionally redirect back to home page
-                // window.location.href = 'index.html';
-            }, 1000);
+            });
         });
     }
 
