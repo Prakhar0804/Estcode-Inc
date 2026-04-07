@@ -10,7 +10,8 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Serve static files - fix path for Vercel
-const publicPath = path.join(__dirname, '..');
+const publicPath = process.env.VERCEL ? '/' : path.join(__dirname, '..');
+console.log('Static files path:', publicPath);
 app.use(express.static(publicPath, {
     maxAge: '1h',
     etag: true,
