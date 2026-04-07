@@ -13,21 +13,27 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(express.static(path.join(__dirname, '..')));
 
 // Ensure data directory exists
-const dataDir = path.join(__dirname, '..', 'data');
-if (!fs.existsSync(dataDir)) {
+const dataDir = process.env.VERCEL ? '/tmp' : path.join(__dirname, '..', 'data');
+if (!process.env.VERCEL && !fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir, { recursive: true });
 }
 
 // Email configuration with Gmail
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    auth: {
-        user: process.env.EMAIL_USER || 'contact@estcode.in',
-        pass: process.env.EMAIL_PASS || 'exxjdhgqepxggmqy'
-    }
-});
+let transporter;
+try {
+    transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
+        auth: {
+            user: process.env.EMAIL_USER || 'contact@estcode.in',
+            pass: process.env.EMAIL_PASS || 'exxjdhgqepxggmqy'
+        }
+    });
+} catch (error) {
+    console.error('Transporter initialization error:', error);
+    transporter = null;
+}
 
 // Email configuration
 const emailConfig = {
@@ -63,6 +69,11 @@ function writeInquiries(filePath, data) {
 // Function to send email notification
 async function sendEmailNotification(subject, htmlContent, recipientEmail) {
     try {
+        if (!transporter) {
+            console.log('Email transporter not available, skipping email');
+            return true;
+        }
+        
         const mailOptions = {
             from: emailConfig.from,
             to: emailConfig.to,
@@ -82,7 +93,11 @@ async function sendEmailNotification(subject, htmlContent, recipientEmail) {
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
-    res.json({ status: 'Server is running' });
+    res.json({ status: 'Server is running', env: process.env.NODE_ENV });
+});
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
 // Handle product enquiry submissions
@@ -277,4 +292,5 @@ app.use((err, req, res, next) => {
     });
 });
 
+// Export as Vercel serverless function
 module.exports = app;
