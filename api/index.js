@@ -5,26 +5,60 @@ const nodemailer = require('nodemailer');
 
 const app = express();
 
+// Get the base directory correctly
+const baseDir = process.env.VERCEL ? '/var/task' : path.join(__dirname, '..');
+
 // Middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Serve static files - fix path for Vercel
-const publicPath = process.env.VERCEL ? '/' : path.join(__dirname, '..');
-console.log('Static files path:', publicPath);
-app.use(express.static(publicPath, {
-    maxAge: '1h',
-    etag: true,
-    setHeaders: (res, filePath) => {
-        if (filePath.endsWith('.css')) {
-            res.setHeader('Content-Type', 'text/css; charset=utf-8');
-        } else if (filePath.endsWith('.js')) {
-            res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
-        } else if (filePath.endsWith('.html')) {
-            res.setHeader('Content-Type', 'text/html; charset=utf-8');
-        }
+console.log('Base directory:', baseDir);
+
+// Middleware to serve static files with correct headers
+app.use((req, res, next) => {
+    const fullPath = path.join(baseDir, req.path);
+    
+    // Check if it's a static file request
+    if (fs.existsSync(fullPath) && fs.statSync(fullPath).isFile()) {
+        const ext = path.extname(fullPath).toLowerCase();
+        const mimeTypes = {
+            '.css': 'text/css; charset=utf-8',
+            '.js': 'application/javascript; charset=utf-8',
+            '.html': 'text/html; charset=utf-8',
+            '.json': 'application/json',
+            '.png': 'image/png',
+            '.jpg': 'image/jpeg',
+            '.jpeg': 'image/jpeg',
+            '.gif': 'image/gif',
+            '.svg': 'image/svg+xml',
+            '.ico': 'image/x-icon',
+            '.woff': 'font/woff',
+            '.woff2': 'font/woff2',
+            '.ttf': 'font/ttf',
+            '.xml': 'application/xml',
+            '.txt': 'text/plain'
+        };
+        
+        const contentType = mimeTypes[ext] || 'application/octet-stream';
+        res.setHeader('Content-Type', contentType);
         res.setHeader('Cache-Control', 'public, max-age=3600');
+        
+        try {
+            const content = fs.readFileSync(fullPath);
+            res.send(content);
+            return;
+        } catch (error) {
+            console.error('Error serving file:', error);
+        }
     }
+    
+    next();
+});
+
+// Also add express.static as fallback
+app.use(express.static(baseDir, {
+    maxAge: '1h',
+    etag: false
 }));
 
 // Ensure data directory exists
