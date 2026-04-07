@@ -12,11 +12,17 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Serve static files - fix path for Vercel
 const publicPath = path.join(__dirname, '..');
 app.use(express.static(publicPath, {
-    maxAge: '1d',
-    etag: false,
-    setHeaders: (res, path) => {
-        if (path.endsWith('.css')) res.setHeader('Content-Type', 'text/css');
-        if (path.endsWith('.js')) res.setHeader('Content-Type', 'text/javascript');
+    maxAge: '1h',
+    etag: true,
+    setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.css')) {
+            res.setHeader('Content-Type', 'text/css; charset=utf-8');
+        } else if (filePath.endsWith('.js')) {
+            res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+        } else if (filePath.endsWith('.html')) {
+            res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        }
+        res.setHeader('Cache-Control', 'public, max-age=3600');
     }
 }));
 
@@ -303,6 +309,13 @@ app.use((err, req, res, next) => {
         error: 'Internal server error' 
     });
 });
-
+// 404 handler - serve index.html for SPA routes
+app.use((req, res) => {
+    if (req.accepts('html')) {
+        res.sendFile(path.join(__dirname, '..', 'index.html'));
+    } else {
+        res.status(404).json({ success: false, error: 'Not found' });
+    }
+});
 // Export as Vercel serverless function
 module.exports = app;
