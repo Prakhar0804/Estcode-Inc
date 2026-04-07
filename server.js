@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const nodemailer = require('nodemailer');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -8,6 +9,44 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname)));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Email configuration with Gmail
+const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    auth: {
+        user: process.env.EMAIL_USER || 'contact@estcode.in',
+        pass: process.env.EMAIL_PASS || 'exxjdhgqepxggmqy'
+    }
+});
+
+// Email configuration
+const emailConfig = {
+    from: process.env.EMAIL_USER || 'contact@estcode.in',
+    to: process.env.EMAIL_USER || 'contact@estcode.in',
+    cc: process.env.EMAIL_CC || 'smlakhteyh.exp@gmail.com'
+};
+
+// Function to send email notification
+async function sendEmailNotification(subject, htmlContent, recipientEmail) {
+    try {
+        const mailOptions = {
+            from: emailConfig.from,
+            to: emailConfig.to,
+            cc: emailConfig.cc,
+            subject: subject,
+            html: htmlContent
+        };
+        
+        const info = await transporter.sendMail(mailOptions);
+        console.log(`✓ Email sent: ${info.messageId}`);
+        return true;
+    } catch (error) {
+        console.error('Error sending email:', error);
+        return false;
+    }
+}
 
 // Ensure data directory exists
 const dataDir = path.join(__dirname, 'data');
@@ -45,7 +84,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // Handle product enquiry submissions
-app.post('/api/product-enquiry', (req, res) => {
+app.post('/api/product-enquiry', async (req, res) => {
     try {
         const { name, email, product, quantity, message } = req.body;
         
@@ -96,6 +135,22 @@ app.post('/api/product-enquiry', (req, res) => {
             console.log(`  Email: ${enquiry.email}`);
             console.log(`  Product: ${enquiry.product}`);
             
+            // Send email notification
+            const emailHTML = `
+                <h2>New Product Enquiry Received</h2>
+                <p><strong>Enquiry ID:</strong> ${enquiry.id}</p>
+                <p><strong>Company:</strong> ${enquiry.name}</p>
+                <p><strong>Email:</strong> ${enquiry.email}</p>
+                <p><strong>Product:</strong> ${enquiry.product}</p>
+                <p><strong>Quantity:</strong> ${enquiry.quantity}</p>
+                <p><strong>Submitted:</strong> ${enquiry.submittedAt}</p>
+                <hr>
+                <h3>Message:</h3>
+                <pre>${enquiry.message}</pre>
+            `;
+            
+            await sendEmailNotification('New Product Enquiry - ' + enquiry.id, emailHTML, enquiry.email);
+            
             res.json({ 
                 success: true,
                 id: enquiry.id,
@@ -114,7 +169,7 @@ app.post('/api/product-enquiry', (req, res) => {
 });
 
 // Handle general contact form submissions
-app.post('/api/inquiry', (req, res) => {
+app.post('/api/inquiry', async (req, res) => {
     try {
         const { name, email, company, message } = req.body;
         
@@ -142,6 +197,22 @@ app.post('/api/inquiry', (req, res) => {
 
         if (writeSuccess) {
             console.log(`✓ New inquiry saved: ${inquiry.id}`);
+            
+            // Send email notification
+            const emailHTML = `
+                <h2>New Inquiry Received</h2>
+                <p><strong>Inquiry ID:</strong> ${inquiry.id}</p>
+                <p><strong>Name:</strong> ${inquiry.name}</p>
+                <p><strong>Email:</strong> ${inquiry.email}</p>
+                <p><strong>Company:</strong> ${inquiry.company}</p>
+                <p><strong>Submitted:</strong> ${inquiry.submittedAt}</p>
+                <hr>
+                <h3>Message:</h3>
+                <pre>${inquiry.message}</pre>
+            `;
+            
+            await sendEmailNotification('New Inquiry - ' + inquiry.id, emailHTML, inquiry.email);
+            
             res.json({ 
                 success: true,
                 id: inquiry.id,
