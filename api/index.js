@@ -9,8 +9,16 @@ const app = express();
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Serve static files from parent directory
-app.use(express.static(path.join(__dirname, '..')));
+// Serve static files - fix path for Vercel
+const publicPath = path.join(__dirname, '..');
+app.use(express.static(publicPath, {
+    maxAge: '1d',
+    etag: false,
+    setHeaders: (res, path) => {
+        if (path.endsWith('.css')) res.setHeader('Content-Type', 'text/css');
+        if (path.endsWith('.js')) res.setHeader('Content-Type', 'text/javascript');
+    }
+}));
 
 // Ensure data directory exists
 const dataDir = process.env.VERCEL ? '/tmp' : path.join(__dirname, '..', 'data');
@@ -98,6 +106,10 @@ app.get('/api/health', (req, res) => {
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'index.html'));
+});
+
+app.get('/inquiry.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'inquiry.html'));
 });
 
 // Handle product enquiry submissions
