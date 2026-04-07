@@ -1,6 +1,0 @@
-{
-  "project": "estcode-api",
-  "buildCommand": "npm install",
-  "devCommand": "node server.js",
-  "installCommand": "npm install"
-}
