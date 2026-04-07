@@ -3,7 +3,7 @@
 // API Configuration - update this with your backend URL
 const API_BASE_URL = window.location.hostname === 'localhost' 
     ? 'http://localhost:3000'
-    : 'https://estcode-api.vercel.app'; // Replace with actual backend URL
+    : 'https://estcode-inc-backend.vercel.app'; // Backend API URL
 
 document.addEventListener('DOMContentLoaded', function() {
     // Valid countries list
