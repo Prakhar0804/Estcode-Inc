@@ -1,14 +1,4 @@
 {
   "version": 2,
-  "experimentalServices": {
-    "frontend": {
-      "framework": "other",
-      "routePrefix": "/"
-    },
-    "backend": {
-      "entrypoint": "backend/index.js",
-      "runtime": "nodejs18.x",
-      "routePrefix": "/_/backend"
-    }
-  }
+  "buildCommand": "echo 'Static site'"
 }
