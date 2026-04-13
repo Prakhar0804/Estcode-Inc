@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>Estcode Search</ShortName>
+  <Description>Search Estcode Internationals for premium Indian exports: handicrafts, furniture, agriculture, home decor, and raw materials</Description>
+  <Url type="text/html" template="https://estcodeinternational.com/?q={searchTerms}"/>
+  <Url type="application/x-suggestions+json" template="https://estcodeinternational.com/suggest?q={searchTerms}"/>
+  <Contact>search@estcodeinternational.com</Contact>
+  <Tags>export trade handicrafts furniture agriculture Est Code Estcode</Tags>
+  <LongName>Estcode Internationals - Premium International Export Company</LongName>
+  <Image height="64" width="64" type="image/png">https://i.ibb.co/fYPvDwd4/IMG-1760.png</Image>
+  <Image height="16" width="16" type="image/x-icon">https://i.ibb.co/fYPvDwd4/IMG-1760.png</Image>
+  <moz:UpdateInterval>7</moz:UpdateInterval>
+</OpenSearchDescription>

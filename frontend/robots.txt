@@ -1,0 +1,39 @@
+# Robots.txt for Estcode Internationals
+# Allow search engines to crawl and index all pages
+
+User-agent: *
+Allow: /
+Allow: /inquiry.html
+Allow: /index.html
+Allow: /sitemap.xml
+Allow: /manifest.json
+Allow: /robots.txt
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/
+
+# Specific rules for Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+Request-rate: 10/1s
+
+# Specific rules for Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Specific rules for other bots
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://estcodeinternational.com/sitemap.xml
+
+# Crawl delay (in seconds) - prevents server overload
+Crawl-delay: 1
